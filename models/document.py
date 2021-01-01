@@ -55,7 +55,7 @@ class Query(Information):
 
 def term_frequency(text: str) -> Dict[str, int]:
     words = text.split()
-    words = [word.lower().strip(".,!?") for word in words]
+    words = [word.lower().strip(".,!?()") for word in words]
     tf = {}
     for word in words:
         if word not in tf:

@@ -61,6 +61,8 @@ class SearchMachine:
         denominator_from_query = 0
         denominator_from_document = 0
         for word in self.vocabulary:
+            if word not in query.content:
+                continue
             weight_in_document = document.coordinates.get(word, 0)
             weight_in_query = query.coordinates.get(word, 0)
 
@@ -80,7 +82,7 @@ class SearchMachine:
 
 
 if __name__=='__main__':
-    directory = '../test_files'
+    directory = '../files'
     sm = SearchMachine(directory)
-    ranking = sm.search('Nome')
+    ranking = sm.search('quântica')
     print(ranking)
