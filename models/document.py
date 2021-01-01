@@ -9,7 +9,7 @@ class Information:
                  content: str = ""):
         self.name = name
         self.__content = content
-        self.term_frequencies = term_frequency(self.content())
+        self.term_frequencies = term_frequency(self.content)
         self.coordinates = None
 
     @property
@@ -37,6 +37,7 @@ class Document(Information):
         self.filepath = filepath
         super().__init__(name=name)
 
+    @property
     def content(self) -> str:
         """
         Print file text

@@ -24,7 +24,7 @@
 ### Linux ###
 *~
 
-# temporary files which can be created if a process still has a handle open of a deleted file
+# temporary test_files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
 
 # KDE directory preferences
@@ -33,7 +33,7 @@
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
-# .nfs files are created when an open file is removed but is still being accessed
+# .nfs test_files are created when an open file is removed but is still being accessed
 .nfs*
 
 ### MicrosoftOffice ###
@@ -54,7 +54,7 @@ Backup of *.doc*
 # PowerPoint temporary
 ~$*.ppt*
 
-# Visio autosave temporary files
+# Visio autosave temporary test_files
 *.~vsd*
 
 ### PyCharm ###
@@ -68,10 +68,10 @@ Backup of *.doc*
 .idea/**/dictionaries
 .idea/**/shelf
 
-# Generated files
+# Generated test_files
 .idea/**/contentModel.xml
 
-# Sensitive or high-churn files
+# Sensitive or high-churn test_files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
@@ -85,7 +85,7 @@ Backup of *.doc*
 .idea/**/libraries
 
 # Gradle and Maven with auto-import
-# When using Gradle or Maven with auto-import, you should exclude module files,
+# When using Gradle or Maven with auto-import, you should exclude module test_files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/artifacts
@@ -161,7 +161,7 @@ fabric.properties
 .idea/codestream.xml
 
 ### Python ###
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL test_files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -191,7 +191,7 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
+#  Usually these test_files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
@@ -263,7 +263,7 @@ __pypackages__/
 celerybeat-schedule
 celerybeat.pid
 
-# SageMath parsed files
+# SageMath parsed test_files
 *.sage.py
 
 # Environments

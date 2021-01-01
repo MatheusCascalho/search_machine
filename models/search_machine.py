@@ -1,6 +1,6 @@
 from typing import List, Dict
 from models.ranking import Ranking
-from models.document import Document, Query
+from models.document import Document, Query, Information
 import os
 import pandas as pd
 import math
@@ -18,23 +18,21 @@ class SearchMachine:
         vocabulary.sort()
         self.vocabulary = vocabulary
         self.inverted_index = self.get_inverted_index()
-        self.calc_coordinates()
+        self.calc_documents_coordinates()
 
-    def calc_coordinates(self):
-        for doc in self.documents:
-            coordinates = {}
-            for word in self.vocabulary:
-                tf = doc.term_frequencies.get(word, 0)
-                idf = self.idf(word)
-                coordinate = tf * idf
-                coordinates[word] = coordinate
-            coordinates = pd.Series(coordinates, )
-            doc.coordinates = coordinates
+    def calc_documents_coordinates(self):
+        for document in self.documents:
+            self.calc_coordinates(document)
 
-
-    def search(self,
-               expresion_search: str) -> Ranking:
-        pass
+    def calc_coordinates(self, information: Information):
+        coordinates = {}
+        for word in self.vocabulary:
+            tf = information.term_frequencies.get(word, 0)
+            idf = self.idf(word)
+            coordinate = tf * idf
+            coordinates[word] = coordinate
+        coordinates = pd.Series(coordinates)
+        information.coordinates = coordinates
 
     def get_inverted_index(self) -> Dict[str, List[Document]]:
         index = {}
@@ -50,6 +48,14 @@ class SearchMachine:
         df.columns = columns
         return df
 
+
+    def idf(self, word):
+        n = len(self.documents)
+        where_occurs = [doc for doc in self.documents if word in doc.term_frequencies.keys()]
+        nt = len(where_occurs)
+        idf = math.log2(n / nt)
+        return idf
+
     def similarity(self, document: Document, query: Query):
         numerator = 0
         denominator_from_query = 0
@@ -64,11 +70,17 @@ class SearchMachine:
         sim = numerator / (math.sqrt(denominator_from_document) * math.sqrt(denominator_from_query))
         return sim
 
+    def search(self,
+               expresion_search: str) -> Ranking:
+        query = Query(expresion_search)
+        self.calc_coordinates(query)
+        similarities = {doc.name: self.similarity(document=doc, query=query) for doc in self.documents}
+        ranking = [doc for doc in sorted(similarities, key=similarities.get, reverse=True)]
+        return ranking
 
 
-    def idf(self, word):
-        n = len(self.documents)
-        where_occurs  = [doc for doc in self.documents if word in doc.term_frequencies.keys()]
-        nt = len(where_occurs)
-        idf = math.log2(n / nt)
-        return idf
+if __name__=='__main__':
+    directory = '../test_files'
+    sm = SearchMachine(directory)
+    ranking = sm.search('Nome')
+    print(ranking)

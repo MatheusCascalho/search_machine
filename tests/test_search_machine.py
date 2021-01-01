@@ -4,7 +4,7 @@ import pandas as pd
 
 class MyTestCase(unittest.TestCase):
     def test_get_inverted_index(self):
-        sm = SearchMachine('../files')
+        sm = SearchMachine('../test_files')
         index = sm.get_inverted_index()
         data = {
             "felipe": [0, 0, 1],
