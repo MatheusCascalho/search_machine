@@ -1,28 +1,39 @@
 from typing import List, Dict
 from functools import total_ordering
+from abc import ABCMeta
 
-class Document:
+
+class Information:
     def __init__(self,
-                 filepath: str):
-        self.filepath = filepath
-        self.filename = get_name(filepath)
-        self.term_frequencies: Dict[str, int] = term_frequency(filepath)
+                 name: str,
+                 content: str = ""):
+        self.name = name
+        self.__content = content
+        self.term_frequencies = term_frequency(self.content)
         self.coordinates = None
 
-    def __repr__(self):
-        return self.filepath
+    @property
+    def content(self):
+        return self.__content
 
     def __str__(self):
-        return self.filename
+        return self.name
 
     def __eq__(self, other):
-        return self.filename == other.filename
+        return self.name == other.name
 
     @total_ordering
     def __lt__(self, other):
-        return self.filename < other.filename
+        return self.name < other.name
 
-    def text(self) -> None:
+
+class Document(Information):
+    def __init__(self,
+                 filepath: str):
+        super().__init__(name=filepath)
+        self.filepath = filepath
+
+    def content(self) -> str:
         """
         Print file text
         """
@@ -30,17 +41,15 @@ class Document:
         with open(self.filepath, 'r') as file:
             for line in file:
                 text += line
-        print(text)
+        return text
 
 
+class Query(Information):
+    def __init__(self, query: str):
+        super().__init__(name='QUERY', content=query)
 
-def term_frequency(filepath: str) -> Dict[str, int]:
-    with open(filepath, 'r') as file:
-        lines = []
-        for line in file:
-            lines.append(line)
-    words = " ".join(lines)
-    words = words.split()
+def term_frequency(text: str) -> Dict[str, int]:
+    words = text.split()
     words = [word.lower().strip(".,!?") for word in words]
     tf = {}
     for word in words:
@@ -50,8 +59,9 @@ def term_frequency(filepath: str) -> Dict[str, int]:
             tf[word] += 1
     return tf
 
+
 def get_name(filepath):
     while '/' in filepath:
         idx = filepath.index('/')
-        filepath = filepath[idx+1:]
+        filepath = filepath[idx + 1:]
     return filepath

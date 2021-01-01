@@ -17,21 +17,14 @@ class MyTestCase(unittest.TestCase):
             "o": 1,
             "seu": 1
         }
-        tf = term_frequency('../files/d1.txt')
+        input = "Ola, meu nome é matheus.\nQual é o seu?"
+        tf = term_frequency(input)
         self.assertDictEqual(expected, tf)
 
     def test_get_name(self):
         expected = "d1.txt"
         name = get_name('../files/d1.txt')
         self.assertEqual(expected, name)
-
-    def test_text(self):
-        capturedOutput = io.StringIO()
-        sys.stdout = capturedOutput
-        expected = "Ola, meu nome é matheus\nQual é o seu?\n"
-        Document('../files/d1.txt').text()
-        text = capturedOutput.getvalue()
-        self.assertEqual(expected, text)
 
 
 

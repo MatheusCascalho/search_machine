@@ -50,7 +50,8 @@ class SearchMachine:
         df.columns = columns
         return df
 
-    def similarity(self):
+    def similarity(self, query: str):
+
         pass
 
     def idf(self, word):
