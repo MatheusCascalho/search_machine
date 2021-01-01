@@ -1,15 +1,26 @@
 from typing import List, Dict
-
+from functools import total_ordering
 
 class Document:
     def __init__(self,
                  filepath: str):
         self.filepath = filepath
+        self.filename = get_name(filepath)
         self.term_frequencies: Dict[str, int] = term_frequency(filepath)
         self.coordinates = None
 
     def __repr__(self):
         return self.filepath
+
+    def __str__(self):
+        return self.filename
+
+    def __eq__(self, other):
+        return self.filename == other.filename
+
+    @total_ordering
+    def __lt__(self, other):
+        return self.filename < other.filename
 
     def text(self) -> None:
         """
@@ -38,3 +49,9 @@ def term_frequency(filepath: str) -> Dict[str, int]:
         else:
             tf[word] += 1
     return tf
+
+def get_name(filepath):
+    while '/' in filepath:
+        idx = filepath.index('/')
+        filepath = filepath[idx+1:]
+    return filepath

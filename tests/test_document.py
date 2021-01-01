@@ -1,6 +1,6 @@
 import unittest
 import unittest.mock
-from models.document import Document, term_frequency
+from models.document import Document, term_frequency, get_name
 import io
 import sys
 import pytest
@@ -20,6 +20,11 @@ class MyTestCase(unittest.TestCase):
         tf = term_frequency('../files/d1.txt')
         self.assertDictEqual(expected, tf)
 
+    def test_get_name(self):
+        expected = "d1.txt"
+        name = get_name('../files/d1.txt')
+        self.assertEqual(expected, name)
+
     def test_text(self):
         capturedOutput = io.StringIO()
         sys.stdout = capturedOutput
@@ -27,6 +32,7 @@ class MyTestCase(unittest.TestCase):
         Document('../files/d1.txt').text()
         text = capturedOutput.getvalue()
         self.assertEqual(expected, text)
+
 
 
 if __name__ == '__main__':
