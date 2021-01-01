@@ -9,12 +9,15 @@ class Information:
                  content: str = ""):
         self.name = name
         self.__content = content
-        self.term_frequencies = term_frequency(self.content)
+        self.term_frequencies = term_frequency(self.content())
         self.coordinates = None
 
     @property
     def content(self):
         return self.__content
+
+    def __repr__(self):
+        return self.name
 
     def __str__(self):
         return self.name
@@ -30,8 +33,9 @@ class Information:
 class Document(Information):
     def __init__(self,
                  filepath: str):
-        super().__init__(name=filepath)
+        name = get_name(filepath)
         self.filepath = filepath
+        super().__init__(name=name)
 
     def content(self) -> str:
         """

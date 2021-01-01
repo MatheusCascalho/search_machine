@@ -1,6 +1,6 @@
 from typing import List, Dict
 from models.ranking import Ranking
-from models.document import Document
+from models.document import Document, Query
 import os
 import pandas as pd
 import math
@@ -50,9 +50,21 @@ class SearchMachine:
         df.columns = columns
         return df
 
-    def similarity(self, query: str):
+    def similarity(self, document: Document, query: Query):
+        numerator = 0
+        denominator_from_query = 0
+        denominator_from_document = 0
+        for word in self.vocabulary:
+            weight_in_document = document.coordinates.get(word, 0)
+            weight_in_query = query.coordinates.get(word, 0)
 
-        pass
+            numerator += weight_in_document * weight_in_query
+            denominator_from_document += weight_in_document**2
+            denominator_from_query += weight_in_query
+        sim = numerator / (math.sqrt(denominator_from_document) * math.sqrt(denominator_from_query))
+        return sim
+
+
 
     def idf(self, word):
         n = len(self.documents)
