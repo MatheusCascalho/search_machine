@@ -1,12 +1,12 @@
 import unittest
 from models.search_machine import SearchMachine
-from models.document import Query
+from models.document import Query, Document
 import pandas as pd
 
 
 class MyTestCase(unittest.TestCase):
     def test_get_inverted_index(self):
-        sm = SearchMachine('test_files')
+        sm = SearchMachine('test_files/test_document')
         index = sm.get_inverted_index()
         data = {
             "felipe": [0, 0, 1],
@@ -36,6 +36,13 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(expected, sim)
 
+    def test_search(self):
+        sm = self.search_machine_factory()
+
+        first_result = sm.search("arquivo de teste")[0]
+        expected = "d1.txt"
+
+        self.assertEqual(expected, first_result)
 
     def search_machine_factory(self, directory = "test_files/test_search_machine"):
         sm = SearchMachine(directory)

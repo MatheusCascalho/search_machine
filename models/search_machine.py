@@ -81,10 +81,3 @@ class SearchMachine:
         similarities = {doc.name: self.similarity(document=doc, query=query) for doc in self.documents}
         ranking = [doc for doc in sorted(similarities, key=similarities.get, reverse=True)]
         return ranking
-
-
-if __name__=='__main__':
-    directory = '../files'
-    sm = SearchMachine(directory)
-    ranking = sm.search('quântica')
-    print(ranking)

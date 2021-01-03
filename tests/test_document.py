@@ -23,7 +23,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_get_name(self):
         expected = "d1.txt"
-        name = get_name('../test_files/d1.txt')
+        name = get_name('../test_files/test_document/d1.txt')
         self.assertEqual(expected, name)
 
     def test_content_property(self):
