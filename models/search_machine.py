@@ -1,5 +1,4 @@
 from typing import List, Dict
-from models.ranking import Ranking
 from models.document import Document, Query, Information
 import os
 import pandas as pd
@@ -73,7 +72,7 @@ class SearchMachine:
         return sim
 
     def search(self,
-               expresion_search: str) -> Ranking:
+               expresion_search: str) -> list:
         query = Query(expresion_search)
         self.calc_coordinates(query)
         similarities = {doc.name: self.similarity(document=doc, query=query) for doc in self.documents}
