@@ -1,6 +1,8 @@
 import unittest
 from models.search_machine import SearchMachine
+from models.document import Query
 import pandas as pd
+
 
 class MyTestCase(unittest.TestCase):
     def test_get_inverted_index(self):
@@ -23,6 +25,21 @@ class MyTestCase(unittest.TestCase):
         df.columns = columns
         pd.testing.assert_frame_equal(df, index)
 
+    def test_similarity(self):
+        sm = self.search_machine_factory()
+        doc = sm.documents[0]
+        query = Query("arquivo de teste")
+        sm.calc_coordinates(query)
+
+        sim = round(sm.similarity(document=doc, query=query), 5)
+        expected = 1
+
+        self.assertEqual(expected, sim)
+
+
+    def search_machine_factory(self, directory = "test_files/test_search_machine"):
+        sm = SearchMachine(directory)
+        return sm
 
 if __name__ == '__main__':
     unittest.main()

@@ -67,8 +67,11 @@ class SearchMachine:
 
             numerator += weight_in_document * weight_in_query
             denominator_from_document += weight_in_document**2
-            denominator_from_query += weight_in_query
-        sim = numerator / (math.sqrt(denominator_from_document) * math.sqrt(denominator_from_query))
+            denominator_from_query += weight_in_query**2
+        denominator = (math.sqrt(denominator_from_document) * math.sqrt(denominator_from_query))
+        if denominator == 0:
+            denominator = 1
+        sim = numerator / denominator
         return sim
 
     def search(self,
