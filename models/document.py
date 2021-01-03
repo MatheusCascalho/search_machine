@@ -72,6 +72,12 @@ class Document(Information):
 
 class Query(Information):
     def __init__(self, query: str):
+        """
+        Query is a child class of Information. A query (or search expression) is created by an expression (string) and
+        has 'Query' as label attribute
+        Args:
+            query:
+        """
         super().__init__(label='QUERY', content=query)
 
 
