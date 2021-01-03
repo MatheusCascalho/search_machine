@@ -78,6 +78,6 @@ class SearchMachine:
                expresion_search: str) -> list:
         query = Query(expresion_search)
         self.calc_coordinates(query)
-        similarities = {doc.name: self.similarity(document=doc, query=query) for doc in self.documents}
+        similarities = {doc.label: self.similarity(document=doc, query=query) for doc in self.documents}
         ranking = [doc for doc in sorted(similarities, key=similarities.get, reverse=True)]
         return ranking

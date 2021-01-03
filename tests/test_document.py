@@ -27,37 +27,37 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected, name)
 
     def test_content_property(self):
-        info = Information(name="info_teste")
+        info = Information(label="info_teste")
         expected = ""
         real = info.content
         self.assertEqual(real, expected)
 
     def test_repr_property(self):
-        info = Information(name="info_teste")
+        info = Information(label="info_teste")
         expected = "info_teste"
         real = repr(info)
         self.assertEqual(real, expected)
 
     def test_str_property(self):
-        info = Information(name="info_teste")
+        info = Information(label="info_teste")
         expected = "info_teste"
         real = str(info)
         self.assertEqual(real, expected)
 
     def test_eq_property(self):
-        info1 = Information(name="info_teste")
-        info2 = Information(name="info_teste")
+        info1 = Information(label="info_teste")
+        info2 = Information(label="info_teste")
         self.assertEqual(info1, info2)
 
     def test_less_property(self):
-        info1 = Information(name="info_teste")
-        info2 = Information(name="info_teste2")
+        info1 = Information(label="info_teste")
+        info2 = Information(label="info_teste2")
         self.assertLess(info1, info2)
 
     def test_query_name(self):
         query = Query("teste")
         expected = "QUERY"
-        self.assertEqual(expected, query.name)
+        self.assertEqual(expected, query.label)
 
 if __name__ == '__main__':
     unittest.main()

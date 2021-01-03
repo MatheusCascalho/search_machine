@@ -4,10 +4,19 @@ from abc import ABCMeta
 
 
 class Information:
+    """
+    Super class that model information.
+    """
     def __init__(self,
-                 name: str,
+                 label: str,
                  content: str = ""):
-        self.name = name
+        """
+        
+        Args:
+            label: 
+            content: 
+        """
+        self.label = label
         self.__content = content
         self.term_frequencies = term_frequency(self.content)
         self.coordinates = None
@@ -17,17 +26,17 @@ class Information:
         return self.__content
 
     def __repr__(self):
-        return self.name
+        return self.label
 
     def __str__(self):
-        return self.name
+        return self.label
 
     def __eq__(self, other):
-        return self.name == other.name
+        return self.label == other.label
 
     @total_ordering
     def __lt__(self, other):
-        return self.name < other.name
+        return self.label < other.label
 
 
 class Document(Information):
@@ -35,7 +44,7 @@ class Document(Information):
                  filepath: str):
         name = get_name(filepath)
         self.filepath = filepath
-        super().__init__(name=name)
+        super().__init__(label=name)
 
     @property
     def content(self) -> str:
@@ -51,7 +60,7 @@ class Document(Information):
 
 class Query(Information):
     def __init__(self, query: str):
-        super().__init__(name='QUERY', content=query)
+        super().__init__(label='QUERY', content=query)
 
 def term_frequency(text: str) -> Dict[str, int]:
     words = text.split()

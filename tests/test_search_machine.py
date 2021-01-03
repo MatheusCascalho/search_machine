@@ -44,7 +44,7 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(expected, first_result)
 
-    def search_machine_factory(self, directory = "test_files/test_search_machine"):
+    def search_machine_factory(self, directory="test_files/test_search_machine"):
         sm = SearchMachine(directory)
         return sm
 
