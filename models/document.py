@@ -1,20 +1,26 @@
-from typing import List, Dict
+from typing import Dict
 from functools import total_ordering
-from abc import ABCMeta
 
 
 class Information:
     """
-    Super class that model information.
+
     """
+
     def __init__(self,
                  label: str,
                  content: str = ""):
         """
-        
+        Super class that model information. Each instance of information have an label and content.
         Args:
-            label: 
-            content: 
+            label [str] : label of information
+            content [str] : content of information
+
+        Class Attributes:
+            label
+            content
+            term_frequencies [dict]: frequency of each word in information
+            coordinates [pandas.Series]: coordinate of document in a search space
         """
         self.label = label
         self.__content = content
@@ -42,6 +48,12 @@ class Information:
 class Document(Information):
     def __init__(self,
                  filepath: str):
+        """
+        Document class is a child class of Information. It's label attribute is the filename and content attribute is
+        content of file
+        Args:
+            filepath [str]
+        """
         name = get_name(filepath)
         self.filepath = filepath
         super().__init__(label=name)
@@ -62,7 +74,17 @@ class Query(Information):
     def __init__(self, query: str):
         super().__init__(label='QUERY', content=query)
 
+
 def term_frequency(text: str) -> Dict[str, int]:
+    """
+    Calculate frequency of each word in a text
+    Args:
+        text [str]
+
+    Returns:
+        term_frequency [dict]
+
+    """
     words = text.split()
     words = [word.lower().strip(".,!?()") for word in words]
     tf = {}
@@ -74,7 +96,15 @@ def term_frequency(text: str) -> Dict[str, int]:
     return tf
 
 
-def get_name(filepath):
+def get_name(filepath: str):
+    """
+    get name of file in a filepath
+    Args:
+        filepath [str]
+
+    Returns:
+        filename [str]
+    """
     while '/' in filepath:
         idx = filepath.index('/')
         filepath = filepath[idx + 1:]
